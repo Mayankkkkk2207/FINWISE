@@ -6,6 +6,7 @@ import Auth from './components/Auth/Auth';
 import Home from './components/Home/Home';
 import Learn from './components/Learn/Learn';
 import Goals from './components/Goals/Goals';
+import config from './config';
 import './components/Budget/BudgetManager.css';
 
 // Components
@@ -58,7 +59,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/logout', {
+      const response = await fetch(`${config.API_URL}/api/logout`, {
         method: 'POST',
         headers: {
           'Authorization': localStorage.getItem('token')

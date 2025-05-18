@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './Auth.css';
-
-const API_URL = 'http://localhost:3001/api';
+import config from '../../config';
 
 const Auth = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -25,7 +24,7 @@ const Auth = ({ onLogin }) => {
 
     try {
       const endpoint = isLogin ? 'login' : 'register';
-      const response = await fetch(`${API_URL}/${endpoint}`, {
+      const response = await fetch(`${config.API_URL}/api/${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

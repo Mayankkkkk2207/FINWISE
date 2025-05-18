@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-const API_URL = 'http://localhost:3001/api';
+import config from '../../config';
 
 const BudgetManager = () => {
   const [transactions, setTransactions] = useState([]);
@@ -19,7 +18,7 @@ const BudgetManager = () => {
 
   const fetchTransactions = async () => {
     try {
-      const response = await fetch(`${API_URL}/transactions`, {
+      const response = await fetch(`${config.API_URL}/api/transactions`, {
         headers: {
           'Authorization': localStorage.getItem('token')
         }
@@ -71,7 +70,7 @@ const BudgetManager = () => {
     if (!newTransaction.description || !newTransaction.amount) return;
 
     try {
-      const response = await fetch(`${API_URL}/transactions`, {
+      const response = await fetch(`${config.API_URL}/api/transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +103,7 @@ const BudgetManager = () => {
 
   const deleteTransaction = async (id) => {
     try {
-      const response = await fetch(`${API_URL}/transactions/${id}`, {
+      const response = await fetch(`${config.API_URL}/api/transactions/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': localStorage.getItem('token')

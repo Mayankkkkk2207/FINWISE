@@ -3,6 +3,17 @@ const mysql = require('mysql2');
 const url = require('url');
 const crypto = require('crypto');
 const config = require('./config');
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+// CORS configuration
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*', // Allow specified frontend URL or all origins in development
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Allow credentials
+}));
 
 // Database configuration
 const db = mysql.createConnection({
@@ -103,9 +114,10 @@ function authenticateUser(req, res, callback) {
 
 // Handle CORS headers
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': process.env.FRONTEND_URL || '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Credentials': 'true',
   'Content-Type': 'application/json'
 };
 
@@ -123,7 +135,7 @@ const server = http.createServer((req, res) => {
   const path = parsedUrl.pathname;
   
   // Add CORS headers to all responses
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL || '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Content-Type', 'application/json');
 
